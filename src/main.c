@@ -10,6 +10,7 @@
 #include "microrl.h"
 #include "console.h"
 #include <generic/macros.h>
+#include <lwip/netif.h>
 
 
 extern int ets_uart_printf(const char *fmt, ...);
@@ -19,19 +20,25 @@ struct envpair {
 };
 
 struct envpair defaultenv[] = {
-	{ "sta-mode",      "dhcp" },
-	{ "default-mode",  "STA" },
-	{ "sta-ip",       "192.168.0.123" },
-	{ "sta-mask",     "255.255.255.0" },
-	{ "sta-gw",       "192.168.0.1" },
+	{ "sta-mode",          "dhcp" },
+	{ "default-mode",      "STA" },
+	{ "sta-ip",            "192.168.0.123" },
+	{ "sta-mask",          "255.255.255.0" },
+	{ "sta-gw",            "192.168.0.1" },
 
-	{ "ap-ip",        "192.168.1.1" },
-	{ "ap-mask",      "255.255.255.0" },
-	{ "ap-gw",        "192.168.1.1" },
+	{ "ap-ip",             "192.168.1.1" },
+	{ "ap-mask",           "255.255.255.0" },
+	{ "ap-gw",             "192.168.1.1" },
 
-	{ "hostname",     "frankenstein" },
-	{ "bootdelay",    "5" },
-	{ "dhcps-enable", "1" },
+	{ "hostname",          "frankenstein" },
+	{ "bootdelay",         "5" },
+	{ "dhcps-enable",      "1" },
+	{ "telnet-port",       "23" },
+	{ "telnet-autostart",  "1" },
+	{ "telnet-drop",       "60" },
+	{ "tftp-server",       "192.168.1.215"}, 
+	{ "tftp-dir",          "/"}, 
+	{ "tftp-file",         "antares.rom"}    
 };
 
 void request_default_environment()
@@ -102,6 +109,12 @@ void network_init()
 
 #include <stdio.h>
 
+
+const char* fr_request_hostname() {
+
+	return env_get("hostname");
+}
+
 void user_init()
 {
 	uart_init(0, 115200);
@@ -112,7 +125,18 @@ void user_init()
 	env_init(CONFIG_ENV_OFFSET, CONFIG_ENV_LEN);
 
 	network_init();
+
+	char *enabled = env_get("telnet-autostart"); 
+	if (enabled && (*enabled=='1')) { 
+		int port = 23; 
+		char *tmp = env_get("telnet-port");
+		if (tmp)
+			port = atoi(tmp);
+		telnet_start(port);
+	}
+
 	console_init(32);
+
 
 	PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO2_U, FUNC_GPIO2);
 	PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO0_U, FUNC_GPIO0);
