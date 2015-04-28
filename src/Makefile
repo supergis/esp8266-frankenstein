@@ -1,10 +1,8 @@
 objects-y+=main.o stdio.o helpers.o flash_end_marker.o
 objects-y+=microrl.o
 objects-y+=console.o
-objects-y+=hostname.o
+# useless objects-y+=hostname.o
 objects-y+=env.o
-#objects-y+=strbuf.o
-#objects-y+=tcpbuf.o
 objects-$(CONFIG_SERVICE_TCP)+=cbuf.o
 objects-$(CONFIG_SERVICE_TCP)+=cbuftools.o
 objects-$(CONFIG_SERVICE_TCP)+=tcpservice.o
@@ -42,6 +40,13 @@ objects-$(CONFIG_CMD_I2C_TCS3414CS)+=i2c_tcs3414cs.o
 objects-$(CONFIG_CMD_I2C_MLX90614)+=i2c_mlx90614.o
 
 ifneq ($(CONFIG_ESP8266_BLOB_LWIP),y)
-subdirs-y+=netapps/
-subdirs-y+=lwip
+objects-y+=esp_timer.o
+subdirs-y+=lwip-app/
+ifeq ($(CONFIG_LWIP_ESP),y)
+subdirs-y+=lwip-esp
+endif
+ifeq ($(CONFIG_LWIP_GIT),y)
+subdirs-y+=lwip-git
+endif
+
 endif

@@ -18,6 +18,9 @@
 #include <lwip/netif.h>
 #include <lwip/app/dhcpserver.h>
 
+#include "main.h"
+#include "missing.h"
+
 #include "env.h"
 #if defined(CONFIG_SERVICE_TELNET)
 #include "svc_telnet.h"
@@ -180,6 +183,20 @@ static void main_init_done(void)
 	      exec_iwconnect(ssid, pass);
 	    }
 	  }
+	}
+	/*
+	 * Check for $bootcmd after initializing wifi ...
+	 */
+	const char *cmd = env_get("bootcmd");
+	if (cmd!= NULL) {
+		int i=0;
+		console_printf("Running bootcmd: %s\r\n", cmd);
+		console_insert('\r');
+		console_insert('\n');
+		while(cmd[i] != '\0')
+			console_insert(cmd[i++]);
+		console_insert('\r');
+		console_insert('\n');
 	}
 }
 
