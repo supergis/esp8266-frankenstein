@@ -30,7 +30,11 @@ CONFIG_ESP8266_BLOB_PHY=y
 CONFIG_ESP8266_BLOB_PP=y
 CONFIG_ESP8266_BLOB_WPA=y
 CONFIG_ESP8266_BLOB_SSL=y
+<<<<<<< HEAD
 CONFIG_ESP8266_BLOB_LWIP=y
+=======
+# CONFIG_ESP8266_BLOB_LWIP is not set
+>>>>>>> upstream/master
 
 #
 # Toolchain settings
@@ -62,7 +66,11 @@ CONFIG_ELFFLAGS=""
 #
 # Libraries and drivers
 #
+<<<<<<< HEAD
 # CONFIG_SHOW_BROKEN is not set
+=======
+CONFIG_SHOW_BROKEN=y
+>>>>>>> upstream/master
 # CONFIG_LIB_ANTARES_CORE is not set
 
 #
@@ -105,6 +113,10 @@ CONFIG_LIB_PANIC_NONE=y
 #
 # 3rd-party libraries
 #
+<<<<<<< HEAD
+=======
+# CONFIG_CONTRIB_LWIP is not set
+>>>>>>> upstream/master
 
 #
 # Project Settings
@@ -119,8 +131,15 @@ CONFIG_CMD_GPIO=y
 CONFIG_CMD_FLASH=y
 CONFIG_CMD_LISTEN=y
 CONFIG_CMD_SEND=y
+<<<<<<< HEAD
 CONFIG_CMD_DS18B20=y
 CONFIG_CMD_DS18B20_DEBUG=y
+=======
+CONFIG_CMD_TFTP=y
+CONFIG_ENABLE_MQTT=y
+CONFIG_CMD_DS18B20=y
+# CONFIG_CMD_DS18B20_DEBUG is not set
+>>>>>>> upstream/master
 
 #
 # Environment Settings
@@ -183,4 +202,8 @@ CONFIG_VERSION_MAJOR="0"
 CONFIG_VERSION_MINOR="2-rc1"
 CONFIG_VERSION_CODENAME="Insane Mushroom"
 CONFIG_VERSION_STRING="0.2-rc1, Insane Mushroom"
+<<<<<<< HEAD
 CONFIG_VERSION_GIT="e4cb0d2bb5c150e8e6cae90bd481ecbf61f1cab8"
+=======
+CONFIG_VERSION_GIT="64304081377ff8ef93034af3e7bc2814e1fe588c"
+>>>>>>> upstream/master
